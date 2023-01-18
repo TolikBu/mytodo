@@ -79,8 +79,7 @@
 }
 
 .todo-list li.completed label .description {
-	color: #cdcdcd;
-	text-decoration: line-through;
+	color: black;
 }
 
 .todo-list li .icon {
@@ -123,4 +122,9 @@
 
 .todo-list li.editing:last-child {
 	margin-bottom: -1px;
+}
+
+.todo-list li.completed label .done {
+	text-decoration: line-through;
+	color: #cdcdcd;
 }

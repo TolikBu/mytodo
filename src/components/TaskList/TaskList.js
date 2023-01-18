@@ -1,15 +1,20 @@
 import { React } from 'react';
-import Task from "../Task";
+import Task from '../Task';
 import './TaskList.css';
 
-const TaskList = ({todos}) => {
-  
+const TaskList = ({ todos, onDeleted, onToggleDone }) => {
   const elements = todos.map((item) => {
     const { id, ...itemProps } = item;
 
     return (
       <li key={id} className="completed">
-        <Task {...itemProps} />
+        <Task
+          {...itemProps}
+          onDeleted={() => {
+            onDeleted(id);
+          }}
+          onToggleDone={() => onToggleDone(id)}
+        />
       </li>
     );
   });
