@@ -5,7 +5,7 @@ export default class Footer extends Component {
 
   render() {
 
-    const { itemsLeft, filter, onFilterChange = () => {} } = this.props;
+    const { itemsLeft, filter, onFilterChange = () => {}, clearTask } = this.props;
 
     const filterButtons = [
       { name: 'all', label: 'All' },
@@ -15,7 +15,7 @@ export default class Footer extends Component {
 
     const buttons = filterButtons.map(({ name, label }) => {
       const isActive = name === filter;
-      const classNames = ' ' + (isActive ? 'completed' : ' ');
+      const classNames = 'notcompl ' + (isActive ? 'completed' : 'notcompl');
 
       return (
         <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>
@@ -30,10 +30,12 @@ export default class Footer extends Component {
         <span className="todo-count">{itemsLeft} items left</span>
         <ul className="filters">
           <li>
-            <div className="">{buttons}</div>
+            <div>{buttons}</div>
           </li>
         </ul>
-        <button className="clear-completed">Clear completed</button>
+        <button className="clear-completed" onClick={clearTask}>
+          Clear completed
+        </button>
       </div>
     );
   }
