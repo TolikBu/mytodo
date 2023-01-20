@@ -15,7 +15,7 @@ export default class Footer extends Component {
 
     const buttons = filterButtons.map(({ name, label }) => {
       const isActive = name === filter;
-      const classNames = 'notcompl ' + (isActive ? 'completed' : 'notcompl');
+      const classNames = '' + (isActive ? 'selected' : '');
 
       return (
         <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>

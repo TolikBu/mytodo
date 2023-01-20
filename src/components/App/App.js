@@ -10,6 +10,7 @@ export default class App extends Component {
   state = {
     todoData: [this.createTodoItem('New task'), this.createTodoItem('Editing task'), this.createTodoItem('Delete task')],
     filter: 'all',
+    isEditing: false
   };
 
   createTodoItem(label) {
@@ -60,12 +61,12 @@ export default class App extends Component {
   };
 
   getFilteredTasks = () => {
-      if (this.state.filter === 'active') {
-        return this.state.todoData.filter((item) => !item.done);
-      } else if (this.state.filter === 'completed') {
-        return this.state.todoData.filter((item) => item.done);
-      }
-      return this.state.todoData;
+    if (this.state.filter === 'active') {
+      return this.state.todoData.filter((item) => !item.done);
+    } else if (this.state.filter === 'completed') {
+      return this.state.todoData.filter((item) => item.done);
+    }
+    return this.state.todoData;
   };
 
   clearTask = () => {
@@ -75,6 +76,22 @@ export default class App extends Component {
         todoData: newArr,
       };
     });
+  };
+
+  onEditTask = (id) => {
+    if (id) {
+      this.setState(({ isEditing }) => {
+        const idx = this.state.todoData.findIndex((el) => {
+          if (el.id === id) {
+            console.log(el);
+          }
+        });
+        // return {
+        //   isEditing: !isEditing
+        // }
+    });
+    }
+    
   };
 
   render() {
@@ -87,7 +104,7 @@ export default class App extends Component {
           <h1>todos</h1>
         </header>
         <NewTaskForm onItemAdded={this.addItem} />
-        <TaskList todos={this.getFilteredTasks()} onDeleted={this.deleteItem} onToggleDone={this.onToggleDone} />
+        <TaskList todos={this.getFilteredTasks()} onDeleted={this.deleteItem} onToggleDone={this.onToggleDone} onEditTask={this.onEditTask} />
         <Footer itemsLeft={doneCount} filter={filter} onFilterChange={this.onFilterChange} clearTask={this.clearTask} />
       </section>
     );
