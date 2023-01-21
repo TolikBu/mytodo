@@ -2,22 +2,27 @@ import React, { Component } from 'react';
 import './NewTaskForm.css';
 
 export default class NewTaskForm extends Component {
-  state = { 
-    label: ''
+  state = {
+    label: '',
   };
 
   onLabelCange = (e) => {
-    this.setState({ 
-      label: e.target.value
-     })
+    this.setState({
+      label: e.target.value,
+    });
   };
 
   onSubmit = (event) => {
-    event.preventDefault()
-    this.props.onItemAdded(this.state.label);
-    this.setState({
-      label: '',
-    });
+    event.preventDefault();
+    let labelNewText = this.state.label;
+    if (labelNewText.trim().length > 0) {
+      this.props.onItemAdded(labelNewText);
+      this.setState({
+        label: '',
+      });
+    } else {
+      alert('Введите задача');
+    }
   };
 
   render() {

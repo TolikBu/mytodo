@@ -81,14 +81,8 @@ export default class App extends Component {
   onEditTask = (id) => {
     if (id) {
       this.setState(({ isEditing }) => {
-        const idx = this.state.todoData.findIndex((el) => {
-          if (el.id === id) {
-            console.log(el);
-          }
-        });
-        // return {
-        //   isEditing: !isEditing
-        // }
+        const idx = this.state.todoData.findIndex((el) =>  el.id === id) 
+        console.log(idx);
     });
     }
     
