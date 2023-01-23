@@ -4,22 +4,22 @@ import './TaskList.css';
 
 const TaskList = ({ todos, onDeleted, onToggleDone, onUpdateTaskLabel }) => {
   const elements = todos.map((item) => {
-    const { id, ...itemProps } = item;
-    let data = item.label
+    const { id } = item;
+
     return (
       <li key={id} className="completed">
         <Task
-          {...itemProps}
+          data={item}
           onDeleted={() => {
             onDeleted(id);
           }}
           onToggleDone={() => onToggleDone(id)}
-          onUpdateTaskLabel={() => onUpdateTaskLabel(id, data)}
+          onUpdateTaskLabel={(newLabel) => onUpdateTaskLabel(id, newLabel)}
         />
       </li>
     );
   });
-  // {console.log(elements)}
+
   return <ul className="todo-list">{elements}</ul>;
 };
 

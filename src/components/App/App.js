@@ -10,7 +10,6 @@ export default class App extends Component {
   state = {
     todoData: [this.createTodoItem('New task'), this.createTodoItem('Editing task'), this.createTodoItem('Delete task')],
     filter: 'all',
-    isEditing: false,
   };
 
   createTodoItem(label) {
@@ -18,7 +17,7 @@ export default class App extends Component {
       id: this.maxId++,
       label,
       done: false,
-      editing: false,
+      createdAt: Date.now()
     };
   }
 
@@ -78,16 +77,19 @@ export default class App extends Component {
     });
   };
 
-  onUpdateTaskLabel = (id, data) => {
+  onUpdateTaskLabel = (id, newLabel) => {
     const i = this.state.todoData.findIndex((el) => el.id === id);
     if (i >= 0) {
-      const newTodoData = [...this.state.todoData];
-      newTodoData[i] = { ...newTodoData[i], data };
-      console.log(newTodoData[i]);
+      this.setState(({ todoData }) => {
+        const newTodoData = [...todoData];
+        newTodoData[i] = { ...newTodoData[i], label: newLabel };
 
-      return {
-        todoData: newTodoData,
-      };
+        console.log(newTodoData[i]);
+
+        return {
+          todoData: newTodoData,
+        };
+      });
     }
   };
 

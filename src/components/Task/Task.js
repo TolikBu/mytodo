@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import Data from '../Data/Data';
+import DateDisplay from '../DateDisplay/DateDisplay';
 import './Task.css';
 
 export default class Task extends Component {
-  state = {
-    isEditing: false,
-    newTaskLabel: false,
-    labelNewInput: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      newTaskLabel: props.label,
+    };
+  }
 
   onEditTask = () => {
     this.setState(({ isEditing }) => {
@@ -17,14 +19,25 @@ export default class Task extends Component {
     });
   };
 
-  getValueInput = () => {
-    this.setState(({ labelNewInput }) => {
-
+  onLabelChange = (e) => {
+    const { value } = e.target;
+    this.setState({
+      newTaskLabel: value,
     });
-  }
+  };
+
+  onLabelKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.setState({
+        isEditing: false,
+      });
+      this.props.onUpdateTaskLabel(this.state.newTaskLabel);
+    }
+  };
 
   render() {
-    const { label, onDeleted, onToggleDone, done, onUpdateTaskLabel } = this.props;
+    const { data, onDeleted, onToggleDone } = this.props;
+    const { done, label, createdAt } = data;
 
     let classNames = 'description';
     let classNamesEdit = '';
@@ -38,9 +51,6 @@ export default class Task extends Component {
       classNamesEdit += 'hide';
       classNameNewLabel += ' edited';
     }
-    // if (this.state.newTaskLabel) {
-
-    // }
 
     return (
       <span>
@@ -48,14 +58,12 @@ export default class Task extends Component {
           <input className="toggle" type="checkbox" onClick={onToggleDone} />
           <label className={classNamesEdit}>
             <span className={classNames}>{label}</span>
-            <Data />
+            <DateDisplay time={createdAt} />
           </label>
           <button className="icon icon-edit" onClick={this.onEditTask}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
         </span>
-        <label className={classNameNewLabel}>
-          <input className="new-input"type="text" onChange={this.getValueInput} />
-        </label>
+        <input className={classNameNewLabel} type="text" onChange={this.onLabelChange} onKeyDown={this.onLabelKeyDown} value={this.state.newTaskLabel} />
       </span>
     );
   }
