@@ -2,10 +2,10 @@ import { React } from 'react';
 import Task from '../Task';
 import './TaskList.css';
 
-const TaskList = ({ todos, onDeleted, onToggleDone, onEditTask }) => {
+const TaskList = ({ todos, onDeleted, onToggleDone, onUpdateTaskLabel }) => {
   const elements = todos.map((item) => {
     const { id, ...itemProps } = item;
-
+    let data = item.label
     return (
       <li key={id} className="completed">
         <Task
@@ -14,7 +14,7 @@ const TaskList = ({ todos, onDeleted, onToggleDone, onEditTask }) => {
             onDeleted(id);
           }}
           onToggleDone={() => onToggleDone(id)}
-          onEditTask={() => onEditTask(id)}
+          onUpdateTaskLabel={() => onUpdateTaskLabel(id, data)}
         />
       </li>
     );
