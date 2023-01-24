@@ -38,6 +38,8 @@ export default class Task extends Component {
   render() {
     const { data, onDeleted, onToggleDone } = this.props;
     const { done, label, createdAt } = data;
+    const { newTaskLabel, isEditing } = this.state;
+    
 
     let classNames = 'description';
     let classNamesEdit = '';
@@ -47,7 +49,7 @@ export default class Task extends Component {
       classNames += ' done';
     }
 
-    if (this.state.isEditing) {
+    if (isEditing) {
       classNamesEdit += 'hide';
       classNameNewLabel += ' edited';
     }
@@ -63,7 +65,7 @@ export default class Task extends Component {
           <button className="icon icon-edit" onClick={this.onEditTask}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
         </span>
-        <input className={classNameNewLabel} type="text" onChange={this.onLabelChange} onKeyDown={this.onLabelKeyDown} value={this.state.newTaskLabel} />
+        <input className={classNameNewLabel} type="text" onChange={this.onLabelChange} onKeyDown={this.onLabelKeyDown} value={newTaskLabel} />
       </span>
     );
   }
