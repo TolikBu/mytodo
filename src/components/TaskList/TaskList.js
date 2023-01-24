@@ -4,12 +4,12 @@ import './TaskList.css';
 
 const TaskList = ({ todos, onDeleted, onToggleDone, onUpdateTaskLabel }) => {
   const elements = todos.map((item) => {
-    const { id } = item;
-
+    const { id, ...itemProps } = item;
+    
     return (
       <li key={id} className="completed">
         <Task
-          data={item}
+          {...itemProps}
           onDeleted={() => {
             onDeleted(id);
           }}

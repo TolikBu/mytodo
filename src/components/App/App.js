@@ -84,8 +84,6 @@ export default class App extends Component {
         const newTodoData = [...todoData];
         newTodoData[i] = { ...newTodoData[i], label: newLabel };
 
-        console.log(newTodoData[i]);
-
         return {
           todoData: newTodoData,
         };

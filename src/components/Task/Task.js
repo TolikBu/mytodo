@@ -20,7 +20,8 @@ export default class Task extends Component {
   };
 
   onLabelChange = (e) => {
-    const { value } = e.target;
+    const { value } = e.target.trim().length > 0;
+    
     this.setState({
       newTaskLabel: value,
     });
@@ -36,8 +37,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const { data, onDeleted, onToggleDone } = this.props;
-    const { done, label, createdAt } = data;
+    const { done, label, createdAt, onDeleted, onToggleDone } = this.props;
     const { newTaskLabel, isEditing } = this.state;
     
 
