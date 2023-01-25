@@ -20,7 +20,7 @@ export default class Task extends Component {
   };
 
   onLabelChange = (e) => {
-    const { value } = e.target.trim().length > 0;
+    const { value } = e.target
     
     this.setState({
       newTaskLabel: value,

@@ -3,6 +3,7 @@ import Task from '../Task';
 import './TaskList.css';
 
 const TaskList = ({ todos, onDeleted, onToggleDone, onUpdateTaskLabel }) => {
+
   const elements = todos.map((item) => {
     const { id, ...itemProps } = item;
     
@@ -22,5 +23,12 @@ const TaskList = ({ todos, onDeleted, onToggleDone, onUpdateTaskLabel }) => {
 
   return <ul className="todo-list">{elements}</ul>;
 };
+
+TaskList.defaultProps = {
+  onUpdateTaskLabel: () => {},
+  onToggleDone: () => {},
+  onDeleted: () => {}
+};
+
 
 export default TaskList;
