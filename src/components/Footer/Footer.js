@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import './Footer.css';
 
 export default class Footer extends Component {
+  static propTypes = {
+    itemsLeft: PropTypes.number
+  };
 
   render() {
-
     const { itemsLeft, filter, onFilterChange = () => {}, clearTask } = this.props;
 
     const filterButtons = [
       { name: 'all', label: 'All' },
       { name: 'active', label: 'Active' },
-      { name: 'completed', label: 'Completed' }
+      { name: 'completed', label: 'Completed' },
     ];
 
     const buttons = filterButtons.map(({ name, label }) => {
@@ -23,7 +26,6 @@ export default class Footer extends Component {
         </button>
       );
     });
-
 
     return (
       <div className="footer">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DateDisplay from '../DateDisplay/DateDisplay';
 import './Task.css';
 
@@ -11,6 +12,15 @@ export default class Task extends Component {
     };
   }
 
+  static defaultProps = {
+    onToggleDone: () => {},
+    onDeleted: () => {},
+  };
+
+  static propTypes = {
+    label: PropTypes.node
+  };
+
   onEditTask = () => {
     this.setState(({ isEditing }) => {
       return {
@@ -21,7 +31,7 @@ export default class Task extends Component {
 
   onLabelChange = (e) => {
     const { value } = e.target.trim().length > 0;
-    
+
     this.setState({
       newTaskLabel: value,
     });
@@ -39,7 +49,6 @@ export default class Task extends Component {
   render() {
     const { done, label, createdAt, onDeleted, onToggleDone } = this.props;
     const { newTaskLabel, isEditing } = this.state;
-    
 
     let classNames = 'description';
     let classNamesEdit = '';
