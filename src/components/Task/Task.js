@@ -12,14 +12,14 @@ export default class Task extends Component {
     };
   }
 
-  static defaultProps = {
+  static defaultProps={
     onToggleDone: () => {},
     onDeleted: () => {},
   };
 
   static propTypes = {
-    label: PropTypes.node,
-    createdAt: PropTypes.number,
+  label: PropTypes.node,
+  createdAt: PropTypes.number,
   };
 
   onEditTask = () => {
@@ -31,7 +31,7 @@ export default class Task extends Component {
   };
 
   onLabelChange = (e) => {
-    const { value } = e.target;
+    const { value}= e.target;
 
     this.setState({
       newTaskLabel: value,
