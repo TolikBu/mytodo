@@ -17,7 +17,7 @@ export default class App extends Component {
       id: this.maxId++,
       label,
       done: false,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     };
   }
 
