@@ -18,9 +18,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "format": "prettier"
+    "lint": "eslint ./src/**/*.{js,jsx}",
+    "lint:fix": "eslint --fix ./src/**/*.{js,jsx}",
+    "format": "prettier --write ./src/**/*.{js,jsx,css} --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": [
@@ -59,9 +59,9 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "npm run lint:fix",
-      "git add"
+    "*.{js,jsx}": [
+      "eslint --fix --cache",
+      "prettier --write --config ./.prettierrc"
     ]
   }
 }
