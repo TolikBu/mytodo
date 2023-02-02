@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import DateDisplay from '../DateDisplay/DateDisplay';
 import './Task.css';
 

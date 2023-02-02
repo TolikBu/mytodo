@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+
 import Task from '../Task';
 import './TaskList.css';
 
@@ -12,7 +13,7 @@ export default class TaskList extends Component {
 
   static propTypes = {
     onUpdateTaskLabel: PropTypes.func,
-    todos: PropTypes.arrayOf(PropTypes.object).isRequired
+    todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   };
 
   render() {

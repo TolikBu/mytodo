@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import './App.css';
 import NewTaskForm from '../NewTaskForm';
 import TaskList from '../TaskList';
@@ -8,7 +9,11 @@ export default class App extends Component {
   maxId = 100;
 
   state = {
-    todoData: [this.createTodoItem('New task'), this.createTodoItem('Editing task'), this.createTodoItem('Delete task')],
+    todoData: [
+      this.createTodoItem('New task'),
+      this.createTodoItem('Editing task'),
+      this.createTodoItem('Delete task'),
+    ],
     filter: 'all',
   };
 
@@ -101,7 +106,12 @@ export default class App extends Component {
           <h1>todos</h1>
         </header>
         <NewTaskForm onItemAdded={this.addItem} />
-        <TaskList todos={this.getFilteredTasks()} onDeleted={this.deleteItem} onToggleDone={this.onToggleDone} onUpdateTaskLabel={this.onUpdateTaskLabel} />
+        <TaskList
+          todos={this.getFilteredTasks()}
+          onDeleted={this.deleteItem}
+          onToggleDone={this.onToggleDone}
+          onUpdateTaskLabel={this.onUpdateTaskLabel}
+        />
         <Footer itemsLeft={doneCount} filter={filter} onFilterChange={this.onFilterChange} clearTask={this.clearTask} />
       </section>
     );

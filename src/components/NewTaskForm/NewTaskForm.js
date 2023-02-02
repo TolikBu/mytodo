@@ -24,13 +24,20 @@ export default class NewTaskForm extends Component {
       alert('Введите задача');
     }
   };
-  
+
   render() {
     const { label } = this.state;
-    
+
     return (
       <form onSubmit={this.onSubmit}>
-        <input value={label} type="text" className="new-todo" placeholder="What needs to be done?" onChange={this.onLabelCange} autoFocus />
+        <input
+          value={label}
+          type="text"
+          className="new-todo"
+          placeholder="What needs to be done?"
+          onChange={this.onLabelCange}
+          autoFocus
+        />
       </form>
     );
   }
