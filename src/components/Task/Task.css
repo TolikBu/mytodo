@@ -122,13 +122,30 @@
 .todo-list li .edit {
   display: none;
   width: calc(100% - 43px);
-  padding: 11.5px 16px; 
+  padding: 11.5px 16px;
   margin: 0 0 0 44px;
-
 }
 .todo-list li .edit.edited {
+  position: relative;
   display: block;
   font-style: normal;
+}
+
+.hide-button-ok {
+  display: none;
+  position: absolute;
+  top: 12px;
+  left: 5px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.hide-button-ok.visible {
+  display: block;
 }
 
 .todo-list li.editing:last-child {

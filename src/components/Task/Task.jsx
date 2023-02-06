@@ -48,6 +48,13 @@ export default class Task extends Component {
     }
   };
 
+  onClickBtnOk = () => {
+    this.setState({
+      isEditing: false,
+    });
+    this.props.onUpdateTaskLabel(this.state.newTaskLabel);
+  };
+
   render() {
     const { done, label, createdAt, onDeleted, onToggleDone } = this.props;
     const { newTaskLabel, isEditing } = this.state;
@@ -55,6 +62,7 @@ export default class Task extends Component {
     let classNames = 'description';
     let classNamesEdit = '';
     let classNameNewLabel = 'edit';
+    let classNameOk = 'hide-button-ok';
 
     if (done) {
       classNames += ' done';
@@ -63,10 +71,11 @@ export default class Task extends Component {
     if (isEditing) {
       classNamesEdit += 'hide';
       classNameNewLabel += ' edited';
+      classNameOk += ' visible';
     }
 
     return (
-      <span>
+      <span className="item-list">
         <span className="view">
           <input className="toggle" type="checkbox" onClick={onToggleDone} />
           <label className={classNamesEdit}>
@@ -75,6 +84,9 @@ export default class Task extends Component {
           </label>
           <button className="icon icon-edit" onClick={this.onEditTask}></button>
           <button className="icon icon-destroy" onClick={onDeleted}></button>
+        </span>
+        <span className={classNameOk} onClick={this.onClickBtnOk}>
+          ok
         </span>
         <input
           className={classNameNewLabel}
