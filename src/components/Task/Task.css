@@ -119,6 +119,49 @@
   content: '✎';
 }
 
+.todo-list li label .descriptions {
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.todo-list .icon-pause,
+.todo-list .icon-play {
+  position: relative;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.todo-list .icon-play {
+  font-size: 15px;
+  color: #cc9a9a;
+}
+
+.icon-pause:after {
+  content: '⏸';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: -5px;
+  left: 0;
+}
+
+.icon-play:after {
+  content: '▶';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 0;
+  left: 0;
+}
+.icon-play:hover {
+  color: #af5b5e;
+}
+
 .todo-list li .edit {
   display: none;
   width: calc(100% - 43px);
@@ -155,4 +198,14 @@
 .todo-list li.completed label .done {
   text-decoration: line-through;
   color: #cdcdcd;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .todo-task .toggle {
+    background: none;
+  }
+
+  .todo-task .toggle {
+    height: 40px;
+  }
 }

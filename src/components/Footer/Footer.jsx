@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Footer.css';
 
+// const FilterType = {
+//   All: 'All',
+//   Active: 'Active',
+//   Completed: 'Completed',
+// };
+
 export default class Footer extends Component {
   static propTypes = {
     itemsLeft: PropTypes.number,
@@ -11,17 +17,26 @@ export default class Footer extends Component {
     const { itemsLeft, filter, onFilterChange = () => {}, clearTask } = this.props;
 
     const filterButtons = [
-      { name: 'all', label: 'All' },
-      { name: 'active', label: 'Active' },
-      { name: 'completed', label: 'Completed' },
+      {
+        type: 'All',
+        label: 'All',
+      },
+      {
+        type: 'Active',
+        label: 'Active',
+      },
+      {
+        type: 'Completed',
+        label: 'Completed',
+      },
     ];
 
-    const buttons = filterButtons.map(({ name, label }) => {
-      const isActive = name === filter;
+    const buttons = filterButtons.map(({ type, label }) => {
+      const isActive = type === filter;
       const classNames = '' + (isActive ? 'selected' : '');
 
       return (
-        <button key={name} type="button" onClick={() => onFilterChange(name)} className={classNames}>
+        <button key={type} type="button" onClick={() => onFilterChange(type)} className={classNames}>
           {label}
         </button>
       );

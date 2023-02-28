@@ -1,44 +1,73 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+
 import './NewTaskForm.css';
 
-export default class NewTaskForm extends Component {
-  state = {
-    label: '',
+const NewTaskForm = ({ onItemAdded }) => {
+  const [params, setParams] = useState({ label: '', minutes: null, seconds: null });
+
+  const onSubmit = (e) => {
+    if (e.key !== 'Enter') return;
+
+    const { label, minutes, seconds } = { ...params };
+
+    if (minutes == null && seconds == null) return;
+    if (label == null || label.length === 0) return;
+
+    const mins = minutes || 0;
+    const secs = seconds || 0;
+
+    const taskTimeMS = (mins * 60 + secs) * 1000;
+    onItemAdded(label, taskTimeMS);
+
+    setParams({});
   };
 
-  onLabelCange = (e) => {
-    this.setState({
-      label: e.target.value,
-    });
-  };
+  const updateParams = (name, value) => {
+    const newParams = { ...params };
 
-  onSubmit = (event) => {
-    event.preventDefault();
-    let labelNewText = this.state.label;
-    if (labelNewText.trim().length > 0) {
-      this.props.onItemAdded(labelNewText);
-      this.setState({
-        label: '',
-      });
+    if (name === 'minutes' || name === 'seconds') {
+      const n = Number(value);
+      if (!isNaN(n)) {
+        newParams[name] = n;
+      }
     } else {
-      alert('Введите задача');
+      newParams[name] = value;
     }
+
+    setParams(newParams);
   };
 
-  render() {
-    const { label } = this.state;
+  return (
+    <form className="new-todo-form" onKeyDown={onSubmit}>
+      <input
+        className="new-todo"
+        placeholder="Task"
+        autoFocus
+        value={params.label || ''}
+        onChange={(e) => {
+          updateParams('label', e.target.value);
+        }}
+      />
+      <input
+        className="new-todo-form__timer"
+        placeholder="Min"
+        autoFocus
+        value={params.minutes || ''}
+        onChange={(e) => {
+          updateParams('minutes', e.target.value);
+        }}
+      />
+      <input
+        className="new-todo-form__timer"
+        placeholder="Sec"
+        autoFocus
+        value={params.seconds || ''}
+        onChange={(e) => {
+          updateParams('seconds', e.target.value);
+        }}
+      />
+    </form>
+  );
+};
 
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          value={label}
-          type="text"
-          className="new-todo"
-          placeholder="What needs to be done?"
-          onChange={this.onLabelCange}
-          autoFocus
-        />
-      </form>
-    );
-  }
-}
+export default NewTaskForm;

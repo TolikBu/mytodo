@@ -1,101 +1,85 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+// import PropTypes from 'prop-types';
 
 import DateDisplay from '../DateDisplay/DateDisplay';
 import './Task.css';
 
-export default class Task extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isEditing: false,
-      newTaskLabel: props.label,
-    };
-  }
+const Task = ({
+  completed,
+  label,
+  createdAt,
+  onDeleted,
+  onToggleCompleted,
+  onUpdateTaskLabel,
+  timeLeft,
+  onStartTask,
+  onPauseTask,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTaskLabel, setNewTaskLabel] = useState(label);
 
-  static defaultProps = {
-    onToggleDone: () => {},
-    onDeleted: () => {},
+  const onEditTask = () => {
+    setIsEditing(true);
   };
 
-  static propTypes = {
-    label: PropTypes.node,
-    createdAt: PropTypes.number,
-  };
-
-  onEditTask = () => {
-    this.setState(({ isEditing }) => {
-      return {
-        isEditing: !isEditing,
-      };
-    });
-  };
-
-  onLabelChange = (e) => {
+  const onLabelChange = (e) => {
     const { value } = e.target;
 
-    this.setState({
-      newTaskLabel: value,
-    });
+    setNewTaskLabel(value);
   };
 
-  onLabelKeyDown = (e) => {
+  const onLabelKeyDown = (e) => {
     if (e.key === 'Enter') {
-      this.setState({
-        isEditing: false,
-      });
-      this.props.onUpdateTaskLabel(this.state.newTaskLabel);
+      setIsEditing(false);
+      onUpdateTaskLabel(newTaskLabel);
     }
   };
 
-  onClickBtnOk = () => {
-    this.setState({
-      isEditing: false,
-    });
-    this.props.onUpdateTaskLabel(this.state.newTaskLabel);
+  const onClickBtnOk = () => {
+    setIsEditing(false);
+    onUpdateTaskLabel(newTaskLabel);
   };
 
-  render() {
-    const { done, label, createdAt, onDeleted, onToggleDone } = this.props;
-    const { newTaskLabel, isEditing } = this.state;
+  const formatTimeLeft = (timeLeft) => {
+    const secs = Math.ceil(timeLeft / 1000);
+    const mins = Math.floor(secs / 60);
 
-    let classNames = 'description';
-    let classNamesEdit = '';
-    let classNameNewLabel = 'edit';
-    let classNameOk = 'hide-button-ok';
+    return `${mins}:${('00' + String(secs - mins * 60)).slice(-2)}`;
+  };
 
-    if (done) {
-      classNames += ' done';
-    }
+  const classNames = completed ? 'description done' : 'description';
+  const classNamesEdit = isEditing ? 'hide' : '';
+  const classNameNewLabel = isEditing ? 'edit edited' : 'edit';
+  const classNameOk = isEditing ? 'hide-button-ok visible' : 'hide-button-ok';
 
-    if (isEditing) {
-      classNamesEdit += 'hide';
-      classNameNewLabel += ' edited';
-      classNameOk += ' visible';
-    }
-
-    return (
-      <span className="item-list">
-        <span className="view">
-          <input className="toggle" type="checkbox" onClick={onToggleDone} />
-          <label className={classNamesEdit}>
-            <span className={classNames}>{label}</span>
-            <DateDisplay time={createdAt} />
-          </label>
-          <button className="icon icon-edit" onClick={this.onEditTask}></button>
-          <button className="icon icon-destroy" onClick={onDeleted}></button>
-        </span>
-        <span className={classNameOk} onClick={this.onClickBtnOk}>
-          ok
-        </span>
-        <input
-          className={classNameNewLabel}
-          type="text"
-          onChange={this.onLabelChange}
-          onKeyDown={this.onLabelKeyDown}
-          value={newTaskLabel}
-        />
+  return (
+    <span className="item-list">
+      <span className="view">
+        <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
+        <label className={classNamesEdit}>
+          <span className={classNames}>{label}</span>
+          <div className="descriptions">
+            <button className="icon-play" onClick={onStartTask}></button>
+            <button className="icon-pause" onClick={onPauseTask}></button>
+            <span className="time">{formatTimeLeft(timeLeft)}</span>
+          </div>
+          <DateDisplay time={createdAt} />
+        </label>
+        <button className="icon icon-edit" onClick={onEditTask}></button>
+        <button className="icon icon-destroy" onClick={onDeleted}></button>
       </span>
-    );
-  }
-}
+      <span className={classNameOk} onClick={onClickBtnOk}>
+        ok
+      </span>
+      <input
+        className={classNameNewLabel}
+        type="text"
+        onChange={onLabelChange}
+        onKeyDown={onLabelKeyDown}
+        value={newTaskLabel}
+      />
+    </span>
+  );
+};
+
+export default Task;
